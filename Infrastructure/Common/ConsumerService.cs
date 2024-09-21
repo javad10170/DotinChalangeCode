@@ -36,7 +36,7 @@ namespace Infrastructure.Common
             {
                 using (var scope = _serviceScopeFactory.CreateScope())
                 {
-                    var _dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                    var _dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
                     var body = ea.Body.ToArray();
                     var message = Encoding.UTF8.GetString(body);

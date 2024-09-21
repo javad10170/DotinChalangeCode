@@ -1,3 +1,9 @@
+using Application.Common.Models;
+using Application.Queries;
+using Domain;
+
+using MediatR;
+
 using Microsoft.AspNetCore.Mvc;
 
 using RabbitMQ.Client;
@@ -12,30 +18,17 @@ namespace ProcessApi.Controllers;
 public class HomeController : ControllerBase
 {
     private readonly ILogger<HomeController> _logger;
+    private readonly IMediator _mediator;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, IMediator mediator)
     {
         _logger = logger;
+        _mediator = mediator;
     }
 
-    [HttpGet(Name = "index")]
-    public async Task<IActionResult> Get()
+    [HttpPost("MyData")]
+    public Task<PaginatedList<MyData>> GetMyDataWithPagination(ISender sender, [AsParameters] GetMyDataWithPaginationQuery query)
     {
-        var factory = new ConnectionFactory() { HostName = "localhost" };
-        using var connection = factory.CreateConnection();
-        using var channel = connection.CreateModel();
-        channel.QueueDeclare(queue: "ProcessFile", durable: false, exclusive: false, autoDelete: false, arguments: null);
-
-        var consumer = new EventingBasicConsumer(channel);
-        consumer.Received += ProcessFile;
-
-        channel.BasicConsume(queue: "ProcessFile", autoAck: true, consumer: consumer);
-
-        return Accepted();
-    }
-
-    private void ProcessFile(object? sender, BasicDeliverEventArgs e)
-    {
-        var message = Encoding.UTF8.GetString(e.Body.ToArray());
+        return sender.Send(query);
     }
 }

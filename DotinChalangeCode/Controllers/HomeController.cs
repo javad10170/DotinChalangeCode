@@ -1,4 +1,8 @@
 ﻿using Application.Command;
+using Application.Common.Models;
+using Application.Queries;
+
+using Domain;
 
 using MediatR;
 
@@ -29,8 +33,7 @@ public class HomeController : ControllerBase
         var command = new UploadFileCommand { File = file };
         await _mediator.Send(command);
 
-
-
         return Accepted();
     }
+
 }

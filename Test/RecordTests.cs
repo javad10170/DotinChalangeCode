@@ -16,13 +16,13 @@ namespace Test
 {
     public class MyDataTests
     {
-        private AppDbContext CreateInMemoryDbContext()
+        private ApplicationDbContext CreateInMemoryDbContext()
         {
-            var options = new DbContextOptionsBuilder<AppDbContext>()
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(databaseName: "TestDatabase")
                 .Options;
 
-            return new AppDbContext(options);
+            return new ApplicationDbContext(options);
         }
 
         [Fact]
