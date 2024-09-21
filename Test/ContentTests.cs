@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Test
 {
-    public class MyDataTests
+    public class ContentTests
     {
         private ApplicationDbContext CreateInMemoryDbContext()
         {
@@ -31,17 +31,17 @@ namespace Test
             // Arrange
             var dbContext = CreateInMemoryDbContext();
 
-            var mydata = new MyData
+            var content = new Content
             {
                 Data = "Javad"
             };
 
             // Act
-            await dbContext.MyData.AddAsync(mydata);
+            await dbContext.Contents.AddAsync(content);
             await dbContext.SaveChangesAsync();
 
             // Assert
-            var usersInDb = await dbContext.MyData.ToListAsync();
+            var usersInDb = await dbContext.Contents.ToListAsync();
             usersInDb.Should().ContainSingle(u => u.Data == "Javad");
         }
     }

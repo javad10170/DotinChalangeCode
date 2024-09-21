@@ -1,6 +1,6 @@
 ﻿namespace Domain
 {
-    public class MyData
+    public class Content
     {
         public int Id { get; set; }
         public string Data { get; set; }

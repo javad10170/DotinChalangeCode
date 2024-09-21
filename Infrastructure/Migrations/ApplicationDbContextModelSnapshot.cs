@@ -21,7 +21,7 @@ namespace Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Domain.MyData", b =>
+            modelBuilder.Entity("Domain.Content", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -35,7 +35,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MyData", (string)null);
+                    b.ToTable("Contents", (string)null);
                 });
 #pragma warning restore 612, 618
         }

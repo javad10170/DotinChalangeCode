@@ -31,40 +31,49 @@ namespace Infrastructure.Common
         const string _queueName = "ProcessFile";
         public async Task ReadMessgaes()
         {
-            var consumer = new AsyncEventingBasicConsumer(_model);
-            consumer.Received += async (ch, ea) =>
+            try
             {
-                using (var scope = _serviceScopeFactory.CreateScope())
+                var consumer = new AsyncEventingBasicConsumer(_model);
+                consumer.Received += async (ch, ea) =>
                 {
-                    var _dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-
-                    var body = ea.Body.ToArray();
-                    var message = Encoding.UTF8.GetString(body);
-                    //var data = Convert.FromBase64String(message);
-
-                    // پردازش و درج رکوردها
-                    using var stream = new MemoryStream(body);
-                    using var package = new ExcelPackage(stream);
-                    var worksheet = package.Workbook.Worksheets[0];
-                    var rowCount = worksheet.Dimension.Rows;
-
-                    for (int row = 2; row <= rowCount; row++)
+                    using (var scope = _serviceScopeFactory.CreateScope())
                     {
-                        var mydata = new MyData
+                        var _dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+                        var body = ea.Body.ToArray();
+                        var message = Encoding.UTF8.GetString(body);
+
+                        // پردازش و درج رکوردها
+                        using var stream = new MemoryStream(body);
+                        using var package = new ExcelPackage(stream);
+                        var worksheet = package.Workbook.Worksheets[0];
+                        var rowCount = worksheet.Dimension.Rows;
+
+                        for (int row = 2; row <= rowCount; row++)
                         {
-                            Data = worksheet.Cells[row, 2].Text
-                        };
-                        await _dbContext.MyData.AddAsync(mydata);
+                            var content = new Content
+                            {
+                                Data = worksheet.Cells[row, 2].Text
+                            };
+                            await _dbContext.Contents.AddAsync(content);
+                        }
+
+                        await _dbContext.SaveChangesAsync();
+
+                        await Task.CompletedTask;
+                        _model.BasicAck(ea.DeliveryTag, false);
                     }
+                };
+                _model.BasicConsume(_queueName, false, consumer);
+                await Task.CompletedTask;
 
-                    await _dbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                //ToDo Log Error Data
+                await Task.CompletedTask;
+            }
 
-                    await Task.CompletedTask;
-                    _model.BasicAck(ea.DeliveryTag, false);
-                }
-            };
-            _model.BasicConsume(_queueName, false, consumer);
-            await Task.CompletedTask;
         }
 
         public void Dispose()

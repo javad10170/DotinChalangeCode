@@ -11,7 +11,7 @@ namespace Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "MyData",
+                name: "Contents",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -20,7 +20,7 @@ namespace Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MyData", x => x.Id);
+                    table.PrimaryKey("PK_Contents", x => x.Id);
                 });
         }
 
@@ -28,7 +28,7 @@ namespace Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "MyData");
+                name: "Contents");
         }
     }
 }

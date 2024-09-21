@@ -15,19 +15,19 @@ namespace ProcessApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class HomeController : ControllerBase
+public class FileController : ControllerBase
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly ILogger<FileController> _logger;
     private readonly IMediator _mediator;
 
-    public HomeController(ILogger<HomeController> logger, IMediator mediator)
+    public FileController(ILogger<FileController> logger, IMediator mediator)
     {
         _logger = logger;
         _mediator = mediator;
     }
 
-    [HttpPost("MyData")]
-    public Task<PaginatedList<MyData>> GetMyDataWithPagination(ISender sender, [AsParameters] GetMyDataWithPaginationQuery query)
+    [HttpPost("Content")]
+    public Task<PaginatedList<Content>> GetContentWithPagination(ISender sender, [AsParameters] GetContentWithPaginationQuery query)
     {
         return sender.Send(query);
     }

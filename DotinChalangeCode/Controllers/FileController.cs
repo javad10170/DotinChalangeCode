@@ -1,8 +1,4 @@
 ﻿using Application.Command;
-using Application.Common.Models;
-using Application.Queries;
-
-using Domain;
 
 using MediatR;
 
@@ -12,13 +8,13 @@ namespace DotinChalangeCode.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class HomeController : ControllerBase
+public class FileController : ControllerBase
 {
 
-    private readonly ILogger<HomeController> _logger;
+    private readonly ILogger<FileController> _logger;
     private readonly IMediator _mediator;
 
-    public HomeController(ILogger<HomeController> logger, IMediator mediator)
+    public FileController(ILogger<FileController> logger, IMediator mediator)
     {
         _logger = logger;
         _mediator = mediator;

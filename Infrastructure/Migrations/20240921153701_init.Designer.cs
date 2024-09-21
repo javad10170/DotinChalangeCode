@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240921120805_init")]
+    [Migration("20240921153701_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -24,7 +24,7 @@ namespace Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Domain.MyData", b =>
+            modelBuilder.Entity("Domain.Content", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -38,7 +38,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MyData", (string)null);
+                    b.ToTable("Contents", (string)null);
                 });
 #pragma warning restore 612, 618
         }

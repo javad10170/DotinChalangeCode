@@ -22,11 +22,11 @@ namespace Infrastructure
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-        public DbSet<MyData> MyData { get; set; }
+        public DbSet<Content> Contents { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<MyData>().ToTable("MyData");
+            modelBuilder.Entity<Content>().ToTable("Contents");
         }
     }
 }

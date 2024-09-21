@@ -10,24 +10,24 @@ using System;
 
 namespace Application.Queries
 {
-    public record GetMyDataWithPaginationQuery : IRequest<PaginatedList<MyData>>
+    public record GetContentWithPaginationQuery : IRequest<PaginatedList<Content>>
     {
         public int PageNumber { get; init; } = 1;
         public int PageSize { get; init; } = 10;
     }
 
-    public class GetMyDataWithPaginationHandler : IRequestHandler<GetMyDataWithPaginationQuery, PaginatedList<MyData>>
+    public class GetContentWithPaginationHandler : IRequestHandler<GetContentWithPaginationQuery, PaginatedList<Content>>
     {
         private readonly IApplicationDbContext _context;
 
-        public GetMyDataWithPaginationHandler(IApplicationDbContext context)
+        public GetContentWithPaginationHandler(IApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<PaginatedList<MyData>> Handle(GetMyDataWithPaginationQuery request, CancellationToken cancellationToken)
+        public async Task<PaginatedList<Content>> Handle(GetContentWithPaginationQuery request, CancellationToken cancellationToken)
         {
-            return await _context.MyData
+            return await _context.Contents
                 .Where(x=>x.Id > 0)
                 .PaginatedListAsync(request.PageNumber, request.PageSize);
         }
