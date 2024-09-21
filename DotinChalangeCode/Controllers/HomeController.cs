@@ -1,15 +1,8 @@
 ﻿using Application.Command;
-using Application.Common.Interfaces;
-
-using Azure.Core;
 
 using MediatR;
 
 using Microsoft.AspNetCore.Mvc;
-
-using RabbitMQ.Client;
-
-using System.Text;
 
 namespace DotinChalangeCode.Controllers;
 

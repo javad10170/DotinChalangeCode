@@ -1,10 +1,8 @@
 ﻿using Application.Common.Interfaces;
 
 using MediatR;
-using Microsoft.AspNetCore.Http;
 
-using System;
-using System.Reflection.Metadata;
+using Microsoft.AspNetCore.Http;
 
 namespace Application.Command
 {

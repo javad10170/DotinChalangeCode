@@ -1,8 +1,4 @@
-using DotinChalangeCode.Controllers;
-
 using Infrastructure.Extension;
-
-using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
