@@ -33,7 +33,7 @@ public class HomeController : ControllerBase
         var command = new UploadFileCommand { File = file };
         await _mediator.Send(command);
 
-        return Accepted();
+        return Ok("file upload in queue for process.");
     }
 
 }
